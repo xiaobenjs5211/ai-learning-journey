@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 1 周执行手册 · 徐成俊</title>
+<style>
+  :root{
+    --bg:#0a0e16;--card:#131b28;--card-2:#18212f;--bg-soft:#0f1520;
+    --border:#22304a;--border-soft:#1b2536;
+    --text:#e8eef8;--text-dim:#8ea3c0;--text-dim2:#63768f;
+    --cyan:#38bdf8;--violet:#a78bfa;--amber:#fbbf24;--green:#34d399;--rose:#fb7185;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:radial-gradient(1000px 560px at 8% -6%,rgba(56,189,248,.14),transparent 60%),
+      radial-gradient(820px 480px at 96% 2%,rgba(167,139,250,.10),transparent 62%),var(--bg);
+    color:var(--text);line-height:1.75;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:0 20px 120px;
+  }
+  .wrap{max-width:940px;margin:0 auto}
+
+  /* HERO */
+  .hero{padding:56px 0 30px;border-bottom:1px solid var(--border-soft)}
+  .kicker{display:inline-block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--cyan);border:1px solid rgba(56,189,248,.35);background:rgba(56,189,248,.07);
+    padding:5px 13px;border-radius:100px;margin-bottom:16px}
+  .hero h1{font-size:clamp(25px,4vw,36px);line-height:1.24;font-weight:800;letter-spacing:-.02em;
+    background:linear-gradient(100deg,#fff 8%,#8ddcff 55%,#a5f3d0 98%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:13px}
+  .hero p{font-size:15px;color:var(--text-dim);max-width:760px}
+  .hero p b{color:var(--text)}
+
+  /* NAV */
+  nav{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}
+  nav a{font-size:12.3px;color:var(--text-dim);text-decoration:none;
+    border:1px solid var(--border-soft);background:var(--card);
+    padding:5px 12px;border-radius:100px;transition:.15s}
+  nav a:hover{color:var(--cyan);border-color:rgba(56,189,248,.45);background:rgba(56,189,248,.07)}
+
+  /* PROGRESS */
+  .pbar{margin-top:22px;background:rgba(19,27,40,.94);border:1px solid var(--border-soft);
+    border-radius:14px;padding:16px 20px;position:sticky;top:10px;z-index:30;backdrop-filter:blur(14px)}
+  .pbar .row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:10px}
+  .pbar .lbl{font-size:13px;font-weight:700}
+  .pbar .pct{font-size:19px;font-weight:800;color:var(--cyan);letter-spacing:-.02em}
+  .track{height:8px;border-radius:100px;background:rgba(255,255,255,.07);overflow:hidden}
+  .fill{height:100%;width:0;border-radius:100px;
+    background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .35s ease}
+  .pbar .hint{font-size:11.6px;color:var(--text-dim2);margin-top:8px}
+
+  /* SECTION */
+  section{padding:46px 0 4px}
+  h2{font-size:20.5px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;
+    display:flex;align-items:center;gap:11px;scroll-margin-top:130px}
+  h2 .num{font-size:12.5px;font-weight:800;color:var(--bg);
+    background:linear-gradient(135deg,var(--cyan),var(--green));
+    width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;
+    justify-content:center;flex:0 0 auto}
+  h2.d2 .num{background:linear-gradient(135deg,var(--violet),var(--cyan))}
+  h2.d5 .num{background:linear-gradient(135deg,var(--amber),var(--rose))}
+  h2.d6 .num{background:linear-gradient(135deg,var(--rose),var(--violet))}
+  .sub{color:var(--text-dim);font-size:14.2px;margin-bottom:20px;max-width:820px}
+  h3{font-size:14.6px;font-weight:700;margin:22px 0 9px;color:var(--text)}
+  p{font-size:13.8px;color:var(--text-dim);margin-bottom:10px}
+  p b,li b{color:var(--text)}
+  ul,ol{margin:0 0 12px 20px;font-size:13.7px;color:var(--text-dim)}
+  li{margin-bottom:6px}
+
+  /* STATUS TABLE */
+  .tbl{width:100%;border-collapse:collapse;font-size:13.2px;margin-bottom:8px;
+    background:var(--card);border-radius:13px;overflow:hidden;border:1px solid var(--border-soft)}
+  .tbl th{background:rgba(255,255,255,.035);text-align:left;padding:11px 15px;
+    font-size:11.8px;letter-spacing:.06em;color:var(--text-dim2);font-weight:700;text-transform:uppercase}
+  .tbl td{padding:11px 15px;border-top:1px solid var(--border-soft);color:var(--text-dim);vertical-align:top}
+  .tbl td:first-child{color:var(--text);font-weight:600;width:38%}
+  .tag{display:inline-block;font-size:11.2px;font-weight:700;padding:2.5px 9px;border-radius:100px;white-space:nowrap}
+  .tag.ok{color:var(--green);background:rgba(52,211,153,.11);border:1px solid rgba(52,211,153,.3)}
+  .tag.no{color:var(--amber);background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3)}
+  .tag.me{color:var(--violet);background:rgba(167,139,250,.11);border:1px solid rgba(167,139,250,.3)}
+
+  /* DAY CARD */
+  .day{background:var(--card);border:1px solid var(--border-soft);border-radius:15px;
+    padding:20px 22px;margin-bottom:14px}
+  .day-h{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+  .day-h .dn{font-size:11.5px;font-weight:800;color:var(--bg);
+    background:linear-gradient(135deg,var(--cyan),var(--green));
+    padding:4px 11px;border-radius:7px;letter-spacing:.03em;white-space:nowrap}
+  .day-h .dt{font-size:15.4px;font-weight:700;flex:1}
+  .day-h .dd{font-size:11.5px;color:var(--text-dim2);white-space:nowrap}
+
+  /* CHECK ROW */
+  .step{display:flex;gap:11px;padding:7px 0;font-size:13.5px;align-items:flex-start}
+  .cb{flex:0 0 auto;width:17px;height:17px;border:1.8px solid var(--border);
+    border-radius:5.5px;cursor:pointer;position:relative;margin-top:4px;
+    transition:.16s;background:transparent}
+  .cb:hover{border-color:var(--cyan)}
+  .cb.on{background:var(--green);border-color:var(--green)}
+  .cb.on::after{content:"";position:absolute;left:4.5px;top:1px;width:4.5px;height:9px;
+    border:solid #06231a;border-width:0 2.2px 2.2px 0;transform:rotate(43deg)}
+  .step span.tx{flex:1;color:var(--text-dim)}
+  .step.done span.tx{opacity:.4;text-decoration:line-through;text-decoration-color:rgba(142,163,192,.5)}
+
+  /* CODE */
+  pre{position:relative;background:#080c13;border:1px solid var(--border-soft);border-radius:12px;
+    padding:15px 17px;overflow-x:auto;font-family:"SF Mono",Menlo,Consolas,monospace;
+    font-size:12.5px;line-height:1.8;color:#c5d4e8;margin:11px 0}
+  pre .c{color:#5b7189}
+  pre .k{color:#7dd3fc}
+  pre .s{color:#a5f3d0}
+  pre .f{color:#c4b5fd}
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12.3px;
+    background:rgba(56,189,248,.1);color:#8ddcff;padding:2px 7px;border-radius:5px;word-break:break-all}
+  .copy{position:absolute;top:9px;right:9px;font-size:11px;font-family:inherit;
+    color:var(--text-dim2);background:rgba(255,255,255,.05);border:1px solid var(--border-soft);
+    padding:3px 10px;border-radius:6px;cursor:pointer;transition:.15s}
+  .copy:hover{color:var(--cyan);border-color:rgba(56,189,248,.4)}
+  .copy.ok{color:var(--green);border-color:rgba(52,211,153,.4)}
+
+  /* CALLOUT */
+  .note{border-radius:11px;padding:13px 16px;font-size:13.2px;margin:13px 0;line-height:1.7}
+  .note b{display:block;font-size:11.5px;letter-spacing:.06em;margin-bottom:4px;font-weight:700}
+  .note.tip{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);color:#b9dfd2}
+  .note.tip b{color:var(--green)}
+  .note.warn{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.22);color:#e8d8b0}
+  .note.warn b{color:var(--amber)}
+  .note.info{background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);color:#b5d9ee}
+  .note.info b{color:var(--cyan)}
+  .note.danger{background:rgba(251,113,133,.06);border:1px solid rgba(251,113,133,.22);color:#f0c3ca}
+  .note.danger b{color:var(--rose)}
+
+  /* TROUBLE */
+  .tr{background:var(--card);border:1px solid var(--border-soft);border-radius:13px;overflow:hidden}
+  .tr .item{padding:14px 18px;border-bottom:1px solid var(--border-soft)}
+  .tr .item:last-child{border-bottom:none}
+  .tr .err{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12.2px;color:var(--rose);
+    margin-bottom:6px;word-break:break-all}
+  .tr .fix{font-size:13.1px;color:var(--text-dim)}
+  .tr .fix b{color:var(--green);font-weight:700}
+
+  footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--border-soft);
+    font-size:12.3px;color:var(--text-dim2);text-align:center;line-height:1.9}
+  @media (max-width:620px){
+    .day-h{flex-wrap:wrap}
+    .pbar{position:static}
+    .tbl td:first-child{width:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="kicker">Stage 0 · Week 1 · 手把手版</span>
+    <h1>第 1 周执行手册</h1>
+    <p>这份手册是照着<b>你这台电脑的真实情况</b>写的，不是通用教程。左边已打勾的，是你之前已经做完的；右边是我刚替你搭好的；剩下标着「你来做」的，才是这周真正要花时间的地方。</p>
+    <nav>
+      <a href="#s0">现在的状态</a>
+      <a href="#s1">已完成的部分</a>
+      <a href="#day2">Day 2 注册账号</a>
+      <a href="#day3">Day 3 跑通</a>
+      <a href="#day4">Day 4 拆参数</a>
+      <a href="#day5">Day 5 密钥安全</a>
+      <a href="#day6">Day 6 推代码</a>
+      <a href="#day7">Day 7 写 README</a>
+      <a href="#trouble">卡住了怎么办</a>
+      <a href="#check">验收清单</a>
+    </nav>
+    <div class="pbar">
+      <div class="row">
+        <div class="lbl">第 1 周剩余动作</div>
+        <div class="pct" id="pct">0%</div>
+      </div>
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <div class="row" style="margin:8px 0 0">
+        <div class="hint" id="hint">已完成 0 / 0 项</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ 0. 状态体检 ============ -->
+  <section id="s0">
+    <h2><span class="num">0</span>先看结论：你的机器已经达标了</h2>
+    <p class="sub">我实际去你电脑上查了 Python、Git、VS Code 和扩展的安装情况。结果如下 —— 你卡住的不是环境，是「不知道具体该敲哪几行」。</p>
+    <table class="tbl">
+      <thead><tr><th>检查项</th><th>实际情况</th><th>结论</th></tr></thead>
+      <tbody>
+        <tr><td>Python 3.11+</td><td>已装 <b>3.14.6</b>，路径在 <code>AppData\Local\Programs\Python\Python314</code>，已进 PATH</td><td><span class="tag ok">达标</span></td></tr>
+        <tr><td>VS Code</td><td>已装，<code>code</code> 命令已在 PATH 里</td><td><span class="tag ok">达标</span></td></tr>
+        <tr><td>VS Code 中文界面</td><td>已装 <code>ms-ceintl.vscode-language-pack-zh-hans</code></td><td><span class="tag ok">达标</span></td></tr>
+        <tr><td>VS Code Python 扩展</td><td>已装微软官方 <code>ms-python.python</code> 2026.10</td><td><span class="tag ok">达标</span></td></tr>
+        <tr><td>Git</td><td>已装 2.55.0，<code>user.name</code> = <b>xcj</b></td><td><span class="tag ok">达标</span></td></tr>
+        <tr><td>Git <code>user.email</code></td><td>是空的 —— 不补上，<code>git commit</code> 会直接拒绝</td><td><span class="tag no">要补</span></td></tr>
+        <tr><td>智谱 API Key</td><td>没查到（属于账号信息，需要你自己注册）</td><td><span class="tag no">你来做</span></td></tr>
+        <tr><td>GitHub 账号</td><td>没查到（需要你确认是否已有账号）</td><td><span class="tag no">你来做</span></td></tr>
+        <tr><td>项目目录 + 虚拟环境</td><td>已建好 <code>C:\Users\ALSL6\ai-learning-journey</code>，虚拟环境和依赖都装完了</td><td><span class="tag me">已完成</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note tip"><b>一句话总结</b>第 1 周清单里的「安装七样工具」，你其实已经完成了 5 样。剩下的是两个账号 + 敲代码 + 推仓库。</div>
+  </section>
+
+  <!-- ============ 1. 已完成 ============ -->
+  <section id="s1">
+    <h2><span class="num">1</span>我已经替你搭好的部分</h2>
+    <p class="sub">位置：<code>C:\Users\ALSL6\ai-learning-journey</code>（路径无中文、无空格，符合要求）</p>
+    <table class="tbl">
+      <thead><tr><th>文件 / 目录</th><th>作用</th></tr></thead>
+      <tbody>
+        <tr><td><code>.venv/</code></td><td>虚拟环境，用你的 Python 3.14.6 创建。已装好 zhipuai、python-dotenv、sniffio</td></tr>
+        <tr><td><code>hello_ai.py</code></td><td>Day 3 的主脚本 —— 已写好并做过语法检查</td></tr>
+        <tr><td><code>explore_params.py</code></td><td>Day 4 的参数实验脚本，5 个实验直接跑就能看出差别</td></tr>
+        <tr><td><code>.env</code></td><td>密钥文件，里面现在是占位符，<b>等你把 Key 粘进去</b></td></tr>
+        <tr><td><code>.env.example</code></td><td>给外人看的模板，可以安全提交到 GitHub</td></tr>
+        <tr><td><code>.gitignore</code></td><td>已排除 <code>.env</code> 和 <code>.venv</code> —— Day 5 的核心任务已就位</td></tr>
+        <tr><td><code>requirements.txt</code></td><td>依赖清单，别人能一键装好</td></tr>
+        <tr><td><code>README.md</code></td><td>骨架已写好，<b>结尾的「踩坑」部分留给你自己填</b></td></tr>
+      </tbody>
+    </table>
+    <div class="note warn"><b>顺手帮你排掉的一个真实大坑</b>智谱官方 SDK <code>zhipuai 2.1.5</code> 内部 <code>import sniffio</code>，却<b>没把它写进依赖声明</b>。直接 <code>pip install zhipuai</code> 后一 import 就报 <code>ModuleNotFoundError: No module named 'sniffio'</code>。我已经补装了，并写进了 <code>requirements.txt</code> —— 这条可以直接记进你的「踩坑记录」，是你第一天就攒下的技术素材。</div>
+    <div class="note danger"><b>但代码请你亲手敲一遍</b>你的计划里自己写了「照着敲，别复制粘贴 —— 手感是靠敲出来的」。文件已经给你当参考答案了，但请新建一个文件、对着敲一次、故意敲错一次、再修好。这一步省不得。</div>
+  </section>
+
+  <!-- ============ DAY 2 ============ -->
+  <section id="day2">
+    <h2 class="d2"><span class="num">2</span>Day 2 · 注册两个账号</h2>
+    <p class="sub">约 1 小时。这天的关键词是「先别急着写代码」—— 把账号和 Key 准备好就行。</p>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 2 - A</span><span class="dt">注册智谱开放平台，拿到 API Key</span><span class="dd">约 30 min</span></div>
+      <div class="step" data-id="d2a1"><div class="cb" data-id="d2a1"></div><span class="tx">浏览器打开 <b>open.bigmodel.cn</b>，手机号注册</span></div>
+      <div class="step" data-id="d2a2"><div class="cb" data-id="d2a2"></div><span class="tx">完成<b>实名认证</b>（没认证的话调用会直接被拒，这是最常见的「Key 明明没错却报错」原因）</span></div>
+      <div class="step" data-id="d2a3"><div class="cb" data-id="d2a3"></div><span class="tx">进控制台 → 找到「API Keys」→ 创建一个，复制出来</span></div>
+      <div class="step" data-id="d2a4"><div class="cb" data-id="d2a4"></div><span class="tx">把 Key 粘贴进 <code>C:\Users\ALSL6\ai-learning-journey\.env</code>，替换掉 <code>在这里粘贴你的智谱APIKey</code> 这一行</span></div>
+      <div class="note warn"><b>复制 Key 时最容易翻车的地方</b>前后别带空格或换行符。带了就会报 <code>AuthenticationError: invalid api key</code>。粘贴后建议把光标移到行首行尾各按一次 <code>Delete</code> / <code>Backspace</code> 确认干净。另外别把它发到任何聊天窗口、群里、截图里。</div>
+    </div>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 2 - B</span><span class="dt">注册 GitHub，用户名想清楚再注册</span><span class="dd">约 25 min</span></div>
+      <div class="step" data-id="d2b1"><div class="cb" data-id="d2b1"></div><span class="tx">打开 <b>github.com</b> 注册，用户名建议 <code>xuchengjun-ai</code> 这种「真名拼音 + 后缀」形式</span></div>
+      <div class="step" data-id="d2b2"><div class="cb" data-id="d2b2"></div><span class="tx">注册后进 Settings → 打开<b>两步验证（2FA）</b>，现在 GitHub 对未开启账号限制越来越多</span></div>
+      <div class="step" data-id="d2b3"><div class="cb" data-id="d2b3"></div><span class="tx">先<b>不要</b>建仓库 —— 留到 Day 6 再建，免得顺序搞乱</span></div>
+      <div class="note info"><b>为什么用户名要早想清楚</b>这个地址会出现在你以后每一份简历、每一个项目 README、每一次技术分享里。改名的代价是旧链接全失效。花十分钟想，比事后改名划算。</div>
+    </div>
+  </section>
+
+  <!-- ============ DAY 3 ============ -->
+  <section id="day3">
+    <h2 class="d2"><span class="num">3</span>Day 3 · 跑通第一次 API 调用</h2>
+    <p class="sub">约 1.5 小时。今天的唯一目标：<b>屏幕上出现模型回复的一句话</b>。看到它，阶段 0 就真的开始了。</p>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 3</span><span class="dt">运行 hello_ai.py</span><span class="dd">约 1.5 h</span></div>
+
+      <h3>第一步：打开项目</h3>
+      <p>打开 VS Code → 菜单「文件 / File」→「打开文件夹」→ 选择 <code>C:\Users\ALSL6\ai-learning-journey</code></p>
+
+      <h3>第二步：打开终端并激活虚拟环境</h3>
+      <p>VS Code 里按 <code>Ctrl</code> + <code>`</code>（Tab 键上面那个反引号）打开终端。终端右侧的下拉箭头可以选类型，<b>建议选「Command Prompt」（命令提示符）</b> —— 用 PowerShell 可能会被「禁止运行脚本」的执行策略拦住。</p>
+      <pre><button class="copy">复制</button>cd C:\Users\ALSL6\ai-learning-journey
+.venv\Scripts\activate</pre>
+      <div class="note info"><b>怎么知道激活成功了</b>命令行开头会出现 <code>(.venv)</code> 字样。没看到这个，后面装包会装到系统 Python 里，就会报「找不到模块」。</div>
+
+      <h3>第三步：确认依赖没漏</h3>
+      <pre><button class="copy">复制</button>pip install -r requirements.txt</pre>
+
+      <h3>第四步：对着敲一遍代码</h3>
+      <p>新建 <code>my_hello.py</code>，照着 <code>hello_ai.py</code> 敲一遍。核心就这几行 —— 敲的时候留意每一行的作用：</p>
+      <pre><span class="c"># 1) 读 .env，把里面的键值对加载进环境变量</span>
+<span class="k">from</span> dotenv <span class="k">import</span> load_dotenv
+load_dotenv()
+
+<span class="c"># 2) 从环境变量里取 Key —— 永远不要写死在代码里</span>
+<span class="k">import</span> os
+<span class="k">from</span> zhipuai <span class="k">import</span> ZhipuAI
+client = <span class="f">ZhipuAI</span>(api_key=os.getenv(<span class="s">"ZHIPU_API_KEY"</span>))
+
+<span class="c"># 3) 发请求：messages 是一个「角色列表」，不是一个字符串</span>
+resp = client.chat.completions.<span class="f">create</span>(
+    model=<span class="s">"glm-4-flash"</span>,
+    messages=[{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: <span class="s">"用一句话解释什么是工业工程"</span>}],
+)
+
+<span class="c"># 4) 从返回对象里把文本抠出来</span>
+<span class="f">print</span>(resp.choices[<span class="s">0</span>].message.content)</pre>
+
+      <h3>第五步：运行</h3>
+      <pre><button class="copy">复制</button>python hello_ai.py</pre>
+      <p>看到模型回复的那句话，Day 3 就过了。按你的计划：<b>截图存下来</b>。</p>
+
+      <div class="note danger"><b>今天不许做的事</b>不要为了「规范」提前折腾 .env、不要建 .gitignore、不要碰 Git。那些是 Day 5 和 Day 6 的事。今天写死 Key 也没关系 —— 先把链路打通，再谈规范。<b>一次只解决一个问题。</b></div>
+    </div>
+  </section>
+
+  <!-- ============ DAY 4 ============ -->
+  <section id="day4">
+    <h2 class="d2"><span class="num">4</span>Day 4 · 拆开参数，搞懂到底在调什么</h2>
+    <p class="sub">约 1 小时。这天不写新功能，只做实验。仓库里 <code>explore_params.py</code> 已经写好了 5 个实验，直接跑就能看出差别。</p>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 4</span><span class="dt">运行 explore_params.py，逐个看现象</span><span class="dd">约 1 h</span></div>
+      <pre><button class="copy">复制</button>python explore_params.py</pre>
+      <table class="tbl">
+        <thead><tr><th>实验</th><th>你要看懂的东西</th></tr></thead>
+        <tbody>
+          <tr><td>1. system 的作用</td><td>同一个问题，加了 system 就变成「教授口吻、限 60 字」。<b>system 是给模型立规矩的地方</b></td></tr>
+          <tr><td>2. assistant 角色</td><td>把模型的回复以 <code>assistant</code> 身份塞回列表，它就能记住上一轮。<b>多轮对话的全部秘密就在这两行 append</b></td></tr>
+          <tr><td>3. temperature</td><td>0.01 时两次回答几乎一样；1.5 时两次完全不同。低值做代码和数据处理，高值做文案和头脑风暴</td></tr>
+          <tr><td>4. max_tokens</td><td>设 30 会话说一半就断 —— 它是输出上限，不是目标长度</td></tr>
+          <tr><td>5. token 用量</td><td>看看每次调用到底消耗多少。<b>上下文越长 → token 越多 → 越贵越慢</b>，这是第 3 周「上下文管理」的动机</td></tr>
+        </tbody>
+      </table>
+      <div class="note tip"><b>今天唯一要背下来的东西</b><code>messages</code> 是一个<b>角色列表</b>，三种角色：<code>system</code>（定规矩）、<code>user</code>（你说的）、<code>assistant</code>（模型说的）。后面所有的 Agent、RAG、工具调用，全都建在这一个结构上。今天理解透了，第 7 周会轻松很多。</div>
+      <div class="step" data-id="d4a1"><div class="cb" data-id="d4a1"></div><span class="tx">做完实验 2 的对比后，把 <code>history.append(...)</code> 两行注释掉再跑一次，亲眼看它「失忆」</span></div>
+      <div class="step" data-id="d4a2"><div class="cb" data-id="d4a2"></div><span class="tx">自己动手改点东西：把 system 换成「你是一个只会用五个字回答的机器人」，看输出怎么变</span></div>
+    </div>
+  </section>
+
+  <!-- ============ DAY 5 ============ -->
+  <section id="day5">
+    <h2 class="d5"><span class="num">5</span>Day 5 · 密钥安全（技术文件已就位）</h2>
+    <p class="sub">约 1 小时。这一天的技术活我已经替你做好了，但<b>为什么这么做</b>你必须自己想明白 —— 这是职业底线，不是格式要求。</p>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 5 - 已就位</span><span class="dt">.env + .gitignore 已经配好</span><span class="dd">review 10 min</span></div>
+      <p>打开项目里的 <code>.gitignore</code>，看一眼内容，重点是第一段：</p>
+      <pre><span class="c"># ===== 密钥，最要紧的一条 =====</span>
+.env
+
+<span class="c"># ===== 虚拟环境（几百 MB，永远不要提交）=====</span>
+.venv/</pre>
+      <p>再看 <code>.env.example</code> —— 它是给外人看的模板，里面只有 <code>your_api_key_here</code> 这种占位符，所以可以放心提交。</p>
+      <div class="note danger"><b>API Key 提交到 GitHub 会发生什么</b>GitHub 上有大量爬虫专门扫公开仓库里的 Key。一个真实 Key 泄露，短则几小时就会被拿去刷额度，账单算在你头上。<b>Key 写进 public 仓库再删掉也没用 —— 历史提交记录里永远留着。</b>如果真不小心提交了，唯一正确的做法是立刻去平台<b>吊销这个 Key</b>，重新生成一个。这条规则以后你带实习、进公司，第一天就会有人跟你强调。</div>
+      <div class="step" data-id="d5a1"><div class="cb" data-id="d5a1"></div><span class="tx">打开 <code>.gitignore</code> 和 <code>.env.example</code> 各看一遍，用自己的话向自己解释：为什么 <code>.env</code> 要排除、<code>.env.example</code> 不用</span></div>
+      <div class="step" data-id="d5a2"><div class="cb" data-id="d5a2"></div><span class="tx">把 Day 3 那个写死了 Key 的 <code>my_hello.py</code> 改成从 <code>os.getenv</code> 读 —— 亲手做一次这个迁移，体会「代码和密钥分离」</span></div>
+    </div>
+  </section>
+
+  <!-- ============ DAY 6 ============ -->
+  <section id="day6">
+    <h2 class="d6"><span class="num">6</span>Day 6 · 第一次推送代码</h2>
+    <p class="sub">约 1.5 小时。这天最容易卡，因为涉及「本地」和「远程」两个世界。下面是完整命令序列，按顺序敲，别跳步。</p>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 6 - 第一步</span><span class="dt">补上缺失的 Git 邮箱</span><span class="dd">2 min</span></div>
+      <p>你这台机器上 <code>user.name</code> 已经有值（<b>xcj</b>），但 <code>user.email</code> 是空的。<b>不补这一条，commit 会被直接拒绝。</b></p>
+      <pre><button class="copy">复制</button>git config --global user.name "xcj"
+git config --global user.email "你的GitHub注册邮箱"</pre>
+      <p>验证一下（两条都要有输出）：</p>
+      <pre><button class="copy">复制</button>git config --global user.name
+git config --global user.email</pre>
+    </div>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 6 - 第二步</span><span class="dt">先在 GitHub 上建好空仓库</span><span class="dd">5 min</span></div>
+      <div class="step" data-id="d6b1"><div class="cb" data-id="d6b1"></div><span class="tx">GitHub 右上角 <b>+</b> → New repository，名字填 <code>ai-learning-journey</code></span></div>
+      <div class="step" data-id="d6b2"><div class="cb" data-id="d6b2"></div><span class="tx">选 <b>Public</b>（以后要给面试官看）</span></div>
+      <div class="step" data-id="d6b3"><div class="cb" data-id="d6b3"></div><span class="tx"><b>千万不要勾</b>「Add a README file」和「Add .gitignore」—— 本地已经有这两个文件了，勾了会让第一次 push 直接冲突</span></div>
+      <div class="step" data-id="d6b4"><div class="cb" data-id="d6b4"></div><span class="tx">Create repository，把页面上给出的 HTTPS 地址记下来</span></div>
+    </div>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 6 - 第三步</span><span class="dt">在项目里初始化并推送</span><span class="dd">约 40 min</span></div>
+      <pre><button class="copy">复制</button>cd C:\Users\ALSL6\ai-learning-journey
+
+<span class="c"># 1. 初始化本地仓库</span>
+git init
+
+<span class="c"># 2. 关键检查：确认 .env 和 .venv 不在列表里！</span>
+<span class="c">#    如果 .env 出现了，停下来，回去检查 .gitignore 文件名有没有敲错</span>
+git status
+
+<span class="c"># 3. 把文件放进暂存区（那一点代表「当前目录全部」）</span>
+git add .
+
+<span class="c"># 4. 提交，写清楚这次做了什么</span>
+git commit -m "feat: 第一次跑通智谱 API 调用"
+
+<span class="c"># 5. 把默认分支名改成 main（GitHub 的叫法）</span>
+git branch -M main
+
+<span class="c"># 6. 关联远程仓库（把 xuchengjun-ai 换成你的用户名）</span>
+git remote add origin https://github.com/xuchengjun-ai/ai-learning-journey.git
+
+<span class="c"># 7. 推送</span>
+git push -u origin main</pre>
+      <div class="note info"><b>第一次 push 会弹出一个浏览器窗口</b>让你登录 GitHub 授权（这叫 Git 凭据管理器）。跟着点「授权 / Authorize」就行，之后就不用再登了。</div>
+      <div class="note warn"><b>如果它让你输密码</b>GitHub 早就不支持用账号密码推送了。要么用上面弹出的浏览器授权，要么去 Settings → Developer settings → Personal access tokens 生成一个 Token，把它当密码粘贴（Token 是唯一一次显示，记得存好）。</div>
+      <div class="step" data-id="d6c1"><div class="cb" data-id="d6c1"></div><span class="tx">刷新 GitHub 仓库页面，能看见你的文件，Day 6 完成</span></div>
+      <div class="step" data-id="d6c2"><div class="cb" data-id="d6c2"></div><span class="tx">把今天踩的坑记进笔记（按你的计划，这些以后就是技术文章的素材）</span></div>
+    </div>
+  </section>
+
+  <!-- ============ DAY 7 ============ -->
+  <section id="day7">
+    <h2><span class="num">7</span>Day 7 · 复盘 + 写 README</h2>
+    <p class="sub">约 1 小时。README 的<b>骨架我已经写好了</b>，但你的计划里明确写了「给仓库写第一个 README」。所以：<b>看完我的骨架，然后删掉重写一遍</b>。</p>
+
+    <div class="day">
+      <div class="day-h"><span class="dn">Day 7</span><span class="dt">自己写一遍 README，并回答 4 个问题</span><span class="dd">约 1 h</span></div>
+      <p>一份合格的 README 必须回答清楚三件事：<b>这是什么、怎么运行、效果如何</b>。打开仓库里的 <code>README.md</code> 对照一下，它是不是都答上了。</p>
+      <h3>复盘：花 20 分钟回答这 4 个问题</h3>
+      <div class="step" data-id="d7a1"><div class="cb" data-id="d7a1"></div><span class="tx">这周哪一步卡我时间最长？为什么？</span></div>
+      <div class="step" data-id="d7a2"><div class="cb" data-id="d7a2"></div><span class="tx">如果想给别人讲清「我做了什么」，我会怎么用三句话概括？</span></div>
+      <div class="step" data-id="d7a3"><div class="cb" data-id="d7a3"></div><span class="tx">「密钥不能进仓库」这件事，除了安全，还反映了什么工程原则？（提示：代码和配置分离）</span></div>
+      <div class="step" data-id="d7a4"><div class="cb" data-id="d7a4"></div><span class="tx">把卡点写进 <code>README.md</code> 的「我踩过的坑」章节 —— 那里我留了空位</span></div>
+      <div class="note tip"><b>验收标准（从你原计划里抄的）</b>仓库里有一个能跑的 Python 脚本，README 说明清楚怎么运行。<b>别追求 100% 完美，追求「跑到」。</b></div>
+    </div>
+  </section>
+
+  <!-- ============ TROUBLE ============ -->
+  <section id="trouble">
+    <h2 class="d5"><span class="num">8</span>卡住了怎么办 · 报错速查表</h2>
+    <p class="sub">这周你大概率会碰到下面某一条。先来这里对一下，别急着去搜。</p>
+    <div class="tr">
+      <div class="item">
+        <div class="err">'python' 不是内部或外部命令 / python: command not found</div>
+        <div class="fix">终端是旧会话没刷新环境变量。→ 关掉终端重开，或直接用 <code>py hello_ai.py</code>。<b>还不行就检查是否在 VS Code 里选错了终端</b>。</div>
+      </div>
+      <div class="item">
+        <div class="err">ModuleNotFoundError: No module named 'zhipuai'</div>
+        <div class="fix">虚拟环境没激活。→ 命令行开头必须有 <code>(.venv)</code>。<b>没有就先跑 <code>.venv\Scripts\activate</code></b>。</div>
+      </div>
+      <div class="item">
+        <div class="err">ModuleNotFoundError: No module named 'sniffio'</div>
+        <div class="fix">zhipuai SDK 的依赖声明漏了。→ <code>pip install sniffio</code>。<b>这条我已经帮你处理并写进 requirements.txt 了。</b></div>
+      </div>
+      <div class="item">
+        <div class="err">AuthenticationError: invalid api key, please check your api key</div>
+        <div class="fix">两种可能：① Key 复制时带了空格或换行；② <b>账号还没做实名认证</b>。→ 重新复制一遍，光标扫过首尾按 Delete 确认干净。</div>
+      </div>
+      <div class="item">
+        <div class="err">无法加载文件 ...activate.ps1，因为在此系统上禁止运行脚本</div>
+        <div class="fix">PowerShell 的执行策略限制。→ <b>最简单：终端换成 Command Prompt</b>。或执行 <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>。</div>
+      </div>
+      <div class="item">
+        <div class="err">调用失败：HTTPSConnectionPool ... Read timed out / Connection error</div>
+        <div class="fix">网络抖动或代理问题。→ 重跑一次；换手机热点试试。<b>这类错误在写 try/except 之后会显示成「调用失败：...」而不是一长串红字，这就是异常处理的价值。</b></div>
+      </div>
+      <div class="item">
+        <div class="err">fatal: unable to auto-detect email address / Please tell me who you are</div>
+        <div class="fix">没配 <code>user.email</code>。→ 跑 Day 6 第一步那两条 <code>git config</code> 命令。</div>
+      </div>
+      <div class="item">
+        <div class="err">git push 被拒：rejected ... Updates were rejected because the remote contains work</div>
+        <div class="fix">建仓库时勾了 README，远程有本地没有的提交。→ <code>git pull --rebase origin main</code> 然后再 <code>git push -u origin main</code>。</div>
+      </div>
+      <div class="item">
+        <div class="err">error: remote origin already exists</div>
+        <div class="fix">之前关联过远程地址。→ <code>git remote set-url origin 你的新地址</code> 覆盖掉。</div>
+      </div>
+      <div class="item">
+        <div class="err">git status 里居然看得见 .env</div>
+        <div class="fix">.gitignore 没生效。→ 确认文件名<b>是 <code>.gitignore</code>（前面有个点）</b>，且放在项目根目录、和 .env 同一层。改名/新建后重新 <code>git status</code>。</div>
+      </div>
+    </div>
+    <div class="note info"><b>搜报错的正确姿势</b>别把整段报错粘进搜索框。只搜<b>关键词</b>：<code>zhipuai ModuleNotFoundError sniffio</code>、<code>git push rejected remote contains work</code>。另外优先看官方文档，其次是 Stack Overflow 和 GitHub Issues，别一上来就翻二手教程 —— 这也是你原计划里写的话。</div>
+  </section>
+
+  <!-- ============ 验收 ============ -->
+  <section id="check">
+    <h2><span class="num">9</span>第 1 周验收清单</h2>
+    <p class="sub">这 6 条全打上勾，第 1 周就达标了。对应你原看板里 Week 1 的 6 个任务。</p>
+    <div class="day">
+      <div class="step" data-id="v1"><div class="cb" data-id="v1"></div><span class="tx"><b>环境清单完成</b>（Python / VS Code / Git / GitHub / 智谱 Key —— 前四项已好，后两项你来做）</span></div>
+      <div class="step" data-id="v2"><div class="cb" data-id="v2"></div><span class="tx"><b>跑通 hello_ai.py</b>，屏幕上看到模型回复</span></div>
+      <div class="step" data-id="v3"><div class="cb" data-id="v3"></div><span class="tx"><b>搞懂 messages 结构</b>，能说清 system / user / assistant 三种角色各自的作用</span></div>
+      <div class="step" data-id="v4"><div class="cb" data-id="v4"></div><span class="tx"><b>API Key 在 .env 里</b>，.gitignore 已排除它</span></div>
+      <div class="step" data-id="v5"><div class="cb" data-id="v5"></div><span class="tx"><b>代码已推送到 GitHub</b> 仓库 ai-learning-journey</span></div>
+      <div class="step" data-id="v6"><div class="cb" data-id="v6"></div><span class="tx"><b>README 已写完</b>，别人照着能在 5 分钟内跑起来</span></div>
+    </div>
+    <div class="note tip"><b>第 1 周的真实目标</b>不是学知识，是让「一个能跑的脚本」和「一个 GitHub 仓库」同时存在。这一周你只要建立起「我能让代码跑起来」的手感，就赢了。</div>
+  </section>
+
+  <footer>
+    第 1 周执行手册 · 为徐成俊定制<br>
+    勾选状态保存在你自己的浏览器里，换设备或清缓存会丢失。<br>
+    配套看板：学习进度.html
+  </footer>
+</div>
+
+<script>
+  const KEY = 'xcj_week1_guide_v1';
+  const boxes = [...document.querySelectorAll('.cb[data-id]')];
+
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
+  function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
+  let state = load();
+
+  function render(){
+    let done = 0;
+    boxes.forEach(cb => {
+      const on = !!state[cb.dataset.id];
+      cb.classList.toggle('on', on);
+      cb.closest('.step')?.classList.toggle('done', on);
+      if(on) done++;
+    });
+    const pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+    document.getElementById('fill').style.width = pct + '%';
+    document.getElementById('pct').textContent = pct + '%';
+    document.getElementById('hint').textContent = `已完成 ${done} / ${boxes.length} 项 · 全部勾完第 1 周就达标了`;
+  }
+
+  document.addEventListener('click', e => {
+    const cb = e.target.closest('.cb[data-id]');
+    if(cb){
+      const id = cb.dataset.id;
+      state[id] = !state[id];
+      if(!state[id]) delete state[id];
+      save(state); render();
+      return;
+    }
+    const btn = e.target.closest('.copy');
+    if(btn){
+      const pre = btn.closest('pre');
+      const text = pre.innerText.replace(/^复制\s*/, '').trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '已复制';
+        btn.classList.add('ok');
+        setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('ok'); }, 1400);
+      });
+    }
+  });
+
+  render();
+</script>
+</body>
+</html>

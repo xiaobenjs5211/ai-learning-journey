@@ -1,0 +1,7 @@
+# 第 1 周需要的依赖
+# 安装：pip install -r requirements.txt
+zhipuai==2.1.5.20250825
+python-dotenv==1.2.4
+# 注意：zhipuai 2.1.5 内部 import 了 sniffio，却没写进自己的依赖声明里，
+# 不单独装会报 ModuleNotFoundError: No module named 'sniffio'
+sniffio==1.3.1
