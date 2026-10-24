@@ -18,10 +18,10 @@ from zhipuai import ZhipuAI
 load_dotenv()
 
 # 2) 从环境变量里取 Key —— 绝对不要写死在代码里，那等于把钥匙插在门上
-api_key = os.getenv("ZHIPU_API_KEY")
+api_key = os.getenv("c815e03c453946399537dbd245ec47f4.40VlD4mApqAQZ7gu")
 
 # 3) 提前检查，给出人话版报错，而不是让它跑到一半崩掉
-if not api_key or api_key == "在这里粘贴你的智谱APIKey":
+if not api_key or api_key == "c815e03c453946399537dbd245ec47f4.40VlD4mApqAQZ7gu":
     raise SystemExit(
         "❌ 没有读到 ZHIPU_API_KEY。\n"
         "   请打开项目根目录的 .env 文件，把 ZHIPU_API_KEY= 后面换成你的真实 Key。"
